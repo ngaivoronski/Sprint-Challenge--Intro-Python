@@ -20,16 +20,16 @@ import csv
 cities = []
 
 class City:
-  def __init__(self, name, state_name, county_name, lat, lng, population, density, timezone, zips):
+  def __init__(self, name, lat, lon):
     self.name = name
-    self.state_name = state_name
-    self.county_name = county_name
+    # self.state_name = state_name
+    # self.county_name = county_name
     self.lat = lat
-    self.lng = lng
-    self.population = population
-    self.density = density
-    self.timezone = timezone
-    self.zips = zips
+    self.lon = lon
+    # self.population = population
+    # self.density = density
+    # self.timezone = timezone
+    # self.zips = zips
 
 
 def cityreader(cities=[]):
@@ -39,7 +39,8 @@ def cityreader(cities=[]):
   with open('cities.csv', newline='') as csvfile:
     reader = csv.DictReader(csvfile)
     for row in reader:
-      row['city'] = City(row['city'], row['state_name'], row['county_name'], row['lat'], row['lng'], row['population'], row['density'], row['timezone'], row['zips'].split(" "))
+      # row['city'] = City(row['city'], row['state_name'], row['county_name'], row['lat'], row['lng'], row['population'], row['density'], row['timezone'], row['zips'].split(" "))
+      row['city'] = City(row['city'], float(row['lat']), float(row['lng']))
       cities.append(row['city'])
   return cities
 
@@ -47,7 +48,7 @@ cityreader(cities)
 
 # Print the list of cities (name, lat, lon), 1 record per line.
 for c in cities:
-    print(f'{c.name}, {c.lat}, {c.lng}')
+    print(f'{c.name}, {c.lat}, {c.lon}')
 
 # STRETCH GOAL!
 #
