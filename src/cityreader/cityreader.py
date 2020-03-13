@@ -22,14 +22,8 @@ cities = []
 class City:
   def __init__(self, name, lat, lon):
     self.name = name
-    # self.state_name = state_name
-    # self.county_name = county_name
     self.lat = lat
     self.lon = lon
-    # self.population = population
-    # self.density = density
-    # self.timezone = timezone
-    # self.zips = zips
 
 
 def cityreader(cities=[]):
@@ -39,7 +33,6 @@ def cityreader(cities=[]):
   with open('cities.csv', newline='') as csvfile:
     reader = csv.DictReader(csvfile)
     for row in reader:
-      # row['city'] = City(row['city'], row['state_name'], row['county_name'], row['lat'], row['lng'], row['population'], row['density'], row['timezone'], row['zips'].split(" "))
       row['city'] = City(row['city'], float(row['lat']), float(row['lng']))
       cities.append(row['city'])
   return cities
@@ -85,8 +78,19 @@ def cityreader_stretch(lat1, lon1, lat2, lon2, cities=[]):
   # within will hold the cities that fall within the specified region
   within = []
 
-  # TODO Ensure that the lat and lon valuse are all floats
+  # TODO Ensure that the lat and lon values are all floats
   # Go through each city and check to see if it falls within 
   # the specified coordinates.
 
+  # Sort the coords provided
+  lat_coords = sorted([float(lat1), float(lat2)])
+  lon_coords = sorted([float(lon1), float(lon2)])
+
+  # check to see if the city coords fall within the provided coords
+  print(lat_coords[0], lat_coords[1])
+  for city in cities:
+    if lat_coords[0] <= city.lat <= lat_coords[1] and lon_coords[0] <= city.lon <= lon_coords[1]:
+      within.append(city)
+
+  # return updated list
   return within
